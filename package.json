@@ -1,0 +1,25 @@
+{
+  "name": "pinazza-shop",
+  "version": "1.0.0",
+  "description": "Find the coolest products for the cheapest prices",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [
+    "ecommerce",
+    "shopping-cart"
+  ],
+  "author": "Seifeddine Elkorichi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.0",
+    "nodemon": "^2.0.7"
+  }
+}
