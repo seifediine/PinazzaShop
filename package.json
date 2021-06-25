@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "Find the coolest products for the cheapest prices",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node backend/server",
     "server": "nodemon backend/server",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node backend/seeder",
+    "data:destroy": "node backend/seeder -d"
   },
   "keywords": [
     "ecommerce",
@@ -16,7 +19,11 @@
   "author": "Seifeddine Elkorichi",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.14"
   },
   "devDependencies": {
     "concurrently": "^6.2.0",
