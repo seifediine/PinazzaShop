@@ -2,12 +2,16 @@ import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 
 const Footer = () => {
+  const thisYear = new Date()
   return (
     <footer>
       <Container>
         <Row>
           <Col className='text-center py-3'>
-            Copyright &copy; 2021, PinazzaShop. All rights reserved
+            <p>
+              Copyright &copy; {thisYear.getFullYear()}, PinazzaShop. All Rights
+              Reserved{' '}
+            </p>
           </Col>
         </Row>
       </Container>
