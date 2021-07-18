@@ -1,7 +1,12 @@
 // The reason we're bringing in Axios is because when we add an item to the cart, we want to make a request to "/api/products" and then the "id" to get the data for that particular product to add to our cart
 import axios from 'axios'
 
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants'
+import {
+  CART_ADD_ITEM,
+  CART_REMOVE_ITEM,
+  CART_SAVE_PAYMENT_METHOD,
+  CART_SAVE_SHIPPING_ADDRESS,
+} from '../constants/cartConstants'
 
 // We gonna use "thunk", so we want to do async and pass in our dispatch
 // We're also going to be saving our entire cart to local storage, so along with dispatch we'll pass "getState" and that allows us to get our entire state tree
@@ -35,4 +40,22 @@ export const removeFromCart = (id) => (dispatch, getState) => {
   })
 
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+}
+
+export const saveShippingAddress = (data) => (dispatch) => {
+  dispatch({
+    type: CART_SAVE_SHIPPING_ADDRESS,
+    payload: data,
+  })
+
+  localStorage.setItem('shippingAddress', JSON.stringify(data))
+}
+
+export const savePaymentMethod = (data) => (dispatch) => {
+  dispatch({
+    type: CART_SAVE_PAYMENT_METHOD,
+    payload: data,
+  })
+
+  localStorage.setItem('paymentMethod', JSON.stringify(data))
 }
