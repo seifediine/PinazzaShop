@@ -18,7 +18,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
   if (orderItems && orderItems.length === 0) {
     res.status(400)
     throw new Error('No Order Items')
-    return
   } else {
     const order = new Order({
       orderItems,
@@ -31,13 +30,13 @@ const addOrderItems = asyncHandler(async (req, res) => {
       totalPrice,
     })
 
-    const createdOrder = await order.save()
+    const createdOrder = await Order.save()
 
     res.status(201).json(createdOrder)
   }
 })
 
-// @desc    Get order bi ID
+// @desc    Get order by ID
 // @route   GET /api/orders/:id
 // @access  Private
 const getOrderById = asyncHandler(async (req, res) => {
@@ -54,4 +53,30 @@ const getOrderById = asyncHandler(async (req, res) => {
   }
 })
 
-export { addOrderItems, getOrderById }
+// @desc    Update order to Paid
+// @route   GET /api/orders/:id/pay
+// @access  Private
+const updateOrderToPaid = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+
+  if (order) {
+    order.isPaid = true
+    order.paidAt = Date.now()
+    // This is coming from PayPal API
+    order.paymentResult = {
+      id: req.body.id,
+      status: req.body.status,
+      update_time: req.body.update_time,
+      email_address: req.body.payer.email_address,
+    }
+
+    const updatedOrder = await Order.save()
+
+    res.json(updatedOrder)
+  } else {
+    res.status(404)
+    throw new Error('Order not found')
+  }
+})
+
+export { addOrderItems, getOrderById, updateOrderToPaid }
