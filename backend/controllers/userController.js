@@ -115,4 +115,27 @@ const getUsers = asyncHandler(async (req, res) => {
   res.json(users)
 })
 
-export { authUser, registerUser, getUserProfile, updateUserProfile, getUsers }
+// @desc    Delete a user
+// @route   DELETE /api/users/:id
+// @access  Private/admin
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  if (user) {
+    await user.remove()
+    res.status(204)
+    res.json({ message: 'User Removed' })
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
+
+export {
+  authUser,
+  registerUser,
+  getUserProfile,
+  updateUserProfile,
+  getUsers,
+  deleteUser,
+}
